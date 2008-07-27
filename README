@@ -1,0 +1,28 @@
+Ham-Reference-Solar version 0.01
+================================
+
+The Ham::Reference::Solar module makes use of WM7D's Solar Resource
+Page to "scrape" (parse) basic solar data and return it for use
+in Amateur Radio applications.
+
+This module should currently be considered alpha.
+
+INSTALLATION
+
+To install this module type the following:
+
+   perl Makefile.PL
+   make
+   make test
+   make install
+
+COPYRIGHT AND LICENCE
+
+Put the correct copyright and licence information here.
+
+Copyright (C) 2008 by Brad McConahay N8QQ
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself, either Perl version 5.8.4 or,
+at your option, any later version of Perl 5 you may have available.
+

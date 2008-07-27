@@ -1,0 +1,6 @@
+Revision history for Perl extension Ham::Reference::Solar.
+
+0.01  Sun Jul 27 01:18:21 2008
+	- original version; created by h2xs 1.23 with options
+		-XAn Ham::Reference::Solar
+

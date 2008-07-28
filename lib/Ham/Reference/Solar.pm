@@ -18,7 +18,7 @@ use warnings;
 require LWP::UserAgent;
 use vars qw($VERSION);
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 my $solar_url = 'http://www.wm7d.net/hamradio/solar';
 my $site_name = 'wm7d.net';
@@ -66,22 +66,13 @@ sub set
 	$self->{$item} = $value;
 }
 
-sub get_hash_ref
+sub get_hashref
 {
 	my $self = shift;
 	my $items = $self->all_item_names;
 	my $hash = {};
 	foreach (sort @$items) { $hash->{$_} = $self->{$_} }
 	return $hash;	
-}
-
-sub items
-{
-	my $self = shift;
-	my @item_names;
-	my $items = $self->all_item_names;
-	foreach (sort @$items) { push @item_names, $_ if $self->{$_} }
-	return \@item_names;
 }
 
 sub all_item_names
@@ -131,7 +122,6 @@ sub _calc_fields
 	$self->{'image'} =~ s/_thumbnail//;
 }
 
-
 sub _get_content
 {
 	my $self = shift;
@@ -148,6 +138,15 @@ sub _get_content
 	}
 	return $response->content;
 }
+
+#sub _items
+#{
+#	my $self = shift;
+#	my @item_names;
+#	my $items = $self->all_item_names;
+#	foreach (sort @$items) { push @item_names, $_ if $self->{$_} }
+#	return \@item_names;
+#}
 
 sub _remove_markup
 {
@@ -194,7 +193,7 @@ Ham::Reference::Solar - Get basic solar data from the web that's useful for Amat
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =head1 SYNOPSIS
 
@@ -203,9 +202,9 @@ Version 0.01
   my $solar = new Ham::Reference::Solar;
   die $solar->error_message if $solar->is_error;
 
-  # access data with a hash ref
+  # access data with a hash reference
 
-  foreach (sort keys %{$solar->get_hash_ref})
+  foreach (sort keys %{$solar->get_hashref})
   {
      print "$_ = $solar->{$_}\n";
   }
@@ -220,7 +219,7 @@ Version 0.01
 =head1 DESCRIPTION
 
 The C<Ham::Reference::Solar> module makes use of WM7D's Solar Resource Page to "scrape" (parse) data
-and return it for your use in either a hash reference or through the get() method.
+and return it for your use.
 
 Please note that this module depends on the current formatting of the web site, and if it changes, this
 module will no longer work until I have a chance to update it.
@@ -231,12 +230,13 @@ module will no longer work until I have a chance to update it.
 
  Usage    : my $solar = Ham::Reference::Solar->new();
  Function : creates a new Ham::Reference::Solar object
- Returns  : A Ham::Reference::Solar object
- Args     : an anonymous hash:
+ Returns  : a Ham::Reference::Solar object
+ Args     : a hash:
             key       required?   value
             -------   ---------   -----
-            timeout   no          an integer of seconds for the call
-                                  to the web site of data.  default = 10
+            timeout   no          an integer of seconds to wait for
+                                  the timeout of the web site
+                                  default = 10
 
 =head1 METHODS
 
@@ -244,8 +244,8 @@ module will no longer work until I have a chance to update it.
 
  Usage    : my $sunspots = $solar->get( $data_item_name );
  Function : gets a single item of solar data
- Returns  : a Geo::Google object
- Args     : see the list of data items below
+ Returns  : a Ham::Reference::Solar object
+ Args     : a single item from the list of data items below
 
 =head2 set()
 
@@ -255,9 +255,9 @@ module will no longer work until I have a chance to update it.
  Args     : data-item: see the list of data items below
             data-value: any value with which you'd like to override the actual value
 
-=head2 get_hash_ref()
+=head2 get_hashref()
 
- Usage    : my $hashref = $solar->get_hash_ref();
+ Usage    : my $hashref = $solar->get_hashref();
  Function : get all current solar data
             (this is probably the easiest way to access data)
  Returns  : a hash reference
@@ -267,7 +267,7 @@ module will no longer work until I have a chance to update it.
 
  Usage    : my $arrayref = $solar->all_item_names();
  Function : get an array reference of all solar data items available
-            from the object
+            from the object   
  Returns  : an array reference
  Args     : n/a
 
@@ -288,7 +288,7 @@ module will no longer work until I have a chance to update it.
 =head1 DATA ITEMS
 
 The following items are available from the object.  Use them with the get() method
-or access them with the get_hash_ref() method.
+or access them with the get_hashref() method.
 
 =over 4
 
@@ -352,7 +352,7 @@ Time of the last update.
 
 =back
 
-=head1 SEE ALSO
+=head1 ACKNOWLEDGEMENTS
 
 This module gets its data from WM7D's Solar Resource Page at http://www.wm7d.net/hamradio/solar.
 Thanks to Mark A. Downing!
@@ -363,11 +363,8 @@ Brad McConahay N8QQ <brad@n8qq.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2008 by Brad McConahay N8QQ
+Copyright 2008 Brad McConahay N8QQ, all rights reserved.
 
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself, either Perl version 5.8.4 or,
-at your option, any later version of Perl 5 you may have available.
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
 
-
-=cut

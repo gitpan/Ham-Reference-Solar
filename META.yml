@@ -1,12 +1,15 @@
-# http://module-build.sourceforge.net/META-spec.html
-#XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
-name:         Ham-Reference-Solar
-version:      0.02
-version_from: lib/Ham/Reference/Solar.pm
-installdirs:  site
-requires:
+--- #YAML:1.0
+name:                Ham-Reference-Solar
+version:             0.03
+abstract:            Get basic solar data from the web that's useful for Amateur Radio applications.
+license:             artistic2
+author:              
+    - Brad McConahay N8QQ <brad@n8qq.com>
+generated_by:        ExtUtils::MakeMaker version 6.42
+distribution_type:   module
+requires:     
     LWP::UserAgent:                0
     Test::More:                    0
-
-distribution_type: module
-generated_by: ExtUtils::MakeMaker version 6.17
+meta-spec:
+    url:     http://module-build.sourceforge.net/META-spec-v1.3.html
+    version: 1.3
